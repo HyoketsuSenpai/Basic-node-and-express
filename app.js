@@ -5,6 +5,8 @@ var http = require('http');
 
 var app = express();
 
+var EVIL_IP = "123.45.67.89";
+
 var publicPath = path.resolve(__dirname,'public');
 app.use(express.static(publicPath));
 
@@ -29,6 +31,15 @@ app.use(logger('short'));
         
 // });
 
+//middleware that stops evil ip addresses
+app.use(function(req,res,next){
+        if(req.ip == EVIL_IP){
+                res.status(401).send("Not allowed");
+        }else{
+                next();
+        }
+});
+
 app.get('/', function(req,res){
         res.end("Welcome to my homepage!");
 });
@@ -42,7 +53,21 @@ app.get('/weather', function(req,res){
 });
 
 app.get('/hello/:who', function(req,res){
-        res.end("Hello, " + req.params.who + '.');
+        var who = req.params.who;
+
+        if(who == "express"){
+                return res.redirect("https://expressjs.com");
+        }
+
+        if(who == "world"){
+                return res.redirect("http://localhost:3000/");
+        }
+
+        if(who == "roland"){
+                return res.sendFile(path.resolve(publicPath, 'roland_drawing.png'));
+        }
+
+        res.end("Hello, " + who + '.');
 });
 
 app.use(function(request, response){
