@@ -1,25 +1,29 @@
 var express = require("express");
+const logger = require('morgan');
 var http = require('http');
 
 var app = express();
 
 // logging middleware
-app.use(function(req,res,next){
-        console.log("In comes a request to: " + req.url);
-        next();
-});
+// app.use(function(req,res,next){
+//         console.log("In comes a request to: " + req.url);
+//         next();
+// });
+
+// logging using morgan
+app.use(logger('short'));
 
 // fake auth middleware
-app.use(function(req,res,next){
-        var mins = (new Date()).getMinutes();
-        if(mins % 2 === 0){
-               return next();
-        }
+// app.use(function(req,res,next){
+//         var mins = (new Date()).getMinutes();
+//         if(mins % 2 === 0){
+//                return next();
+//         }
         
-        res.statusCode = 403;
-        res.end('Not Authorized');
+//         res.statusCode = 403;
+//         res.end('Not Authorized');
         
-});
+// });
 
 app.use(function(request, response){
         response.end('Secret info: the password is "swordfish"!');
