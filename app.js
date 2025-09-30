@@ -5,6 +5,9 @@ var http = require('http');
 
 var app = express();
 
+app.set("views", path.resolve(__dirname,"views"));
+app.set("view engine", "ejs");
+
 var EVIL_IP = "123.45.67.89";
 
 var publicPath = path.resolve(__dirname,'public');
@@ -31,7 +34,7 @@ app.use(logger('short'));
         
 // });
 
-//middleware that stops evil ip addresses
+//middleware that stops example evil ip addresses
 app.use(function(req,res,next){
         if(req.ip == EVIL_IP){
                 res.status(401).send("Not allowed");
@@ -41,7 +44,8 @@ app.use(function(req,res,next){
 });
 
 app.get('/', function(req,res){
-        res.end("Welcome to my homepage!");
+        // res.end("Welcome to my homepage!");
+        res.render("index",{message:"Hey yall this is my web page"});
 });
 
 app.get('/about', function (req,res) {
