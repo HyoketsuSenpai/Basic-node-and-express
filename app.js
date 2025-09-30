@@ -3,8 +3,14 @@ var http = require('http');
 
 var app = express();
 
-app.use(function(request, response){
+// logging middleware
+app.use(function(req,res,next){
         console.log("In comes a requesr to: " + request.url);
+        next();
+});
+
+app.use(function(request, response){
+        response.writeHead(200, {"Content-Type": "text/plain"} )
         response.end("Hello World");
 });
 
@@ -12,3 +18,4 @@ app.use(function(request, response){
 app.listen(3000);
 
 // 57
+
