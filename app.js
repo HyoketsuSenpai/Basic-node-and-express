@@ -29,10 +29,27 @@ app.use(logger('short'));
         
 // });
 
+app.get('/', function(req,res){
+        res.end("Welcome to my homepage!");
+});
+
+app.get('/about', function (req,res) {
+        res.end("Welcome to the about page!");
+});
+
+app.get('/weather', function(req,res){
+        res.end('The current weather is NICE');
+});
+
+app.get('/hello/:who', function(req,res){
+        res.end("Hello, " + req.params.who + '.');
+});
+
 app.use(function(request, response){
-        // response.end('Secret info: the password is "swordfish"!');
-        response.writeHead(200, { "Content-Type": "text/plain" });
-        response.end("Looks like you didn't find a static file.");
+        // // response.end('Secret info: the password is "swordfish"!');
+        // response.writeHead(200, { "Content-Type": "text/plain" });
+        // response.end("Looks like you didn't find a static file.");
+        response.status(404).end("404 page not found");
 });
 
 http.createServer(app).listen(3000);
