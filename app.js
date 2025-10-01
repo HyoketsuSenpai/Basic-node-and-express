@@ -2,6 +2,7 @@ var express = require("express");
 var logger = require('morgan');
 var path = require('path');
 var http = require('http');
+var apiRouter = require('./routes/api_router');
 
 var app = express();
 
@@ -78,6 +79,8 @@ app.get('/hello/:who', function(req,res){
 app.get(/^\/users\/(\+d)$/,function(req, res){
         var userId = parseInt(req.params[0], 10);
 })
+
+app.use('/api', apiRouter);
 
 app.use(function(request, response){
         // // response.end('Secret info: the password is "swordfish"!');
