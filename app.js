@@ -74,6 +74,11 @@ app.get('/hello/:who', function(req,res){
         res.end("Hello, " + who + '.');
 });
 
+//here we use regular expression to make sure it only takes /users/123 or any other integer in place of 123
+app.get(/^\/users\/(\+d)$/,function(req, res){
+        var userId = parseInt(req.params[0], 10);
+})
+
 app.use(function(request, response){
         // // response.end('Secret info: the password is "swordfish"!');
         // response.writeHead(200, { "Content-Type": "text/plain" });
